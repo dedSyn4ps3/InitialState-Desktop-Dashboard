@@ -1,0 +1,372 @@
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+
+import Box from '@material-ui/core/Box';
+import Stack from '@material-ui/core/Stack';
+import Input from '@material-ui/core/Input';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
+import InputLabel from '@material-ui/core/InputLabel';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import FormControl from '@material-ui/core/FormControl';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+
+import { styled, useTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/styles';
+import MuiDrawer from '@material-ui/core/Drawer';
+import MuiAppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import List from '@material-ui/core/List';
+
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+
+import QueuePlayNextIcon from '@material-ui/icons/QueuePlayNext';
+import HomeIcon from '@material-ui/icons/Home';
+import PieChartIcon from '@material-ui/icons/PieChart';
+import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import StarsIcon from '@material-ui/icons/Stars';
+
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Button from '@material-ui/core/Button';
+
+const drawerWidth = 240;
+
+const myStyles = makeStyles({
+    root: {
+        background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+        border: 0,
+        borderRadius: 3,
+        boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+        color: 'white',
+        height: 48,
+        padding: '0 30px',
+    },
+});
+
+const openedMixin = (theme) => ({
+    width: drawerWidth,
+    transition: theme.transitions.create('width', {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.enteringScreen,
+    }),
+    overflowX: 'hidden',
+});
+
+const closedMixin = (theme) => ({
+    transition: theme.transitions.create('width', {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
+    }),
+    overflowX: 'hidden',
+    width: `calc(${theme.spacing(7)} + 1px)`,
+    [theme.breakpoints.up('sm')]: {
+        width: `calc(${theme.spacing(9)} + 1px)`,
+    },
+});
+
+const DrawerHeader = styled('div')(({ theme }) => ({
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    padding: theme.spacing(0, 1),
+    // necessary for content to be below app bar
+    ...theme.mixins.toolbar,
+}));
+
+const AppBar = styled(MuiAppBar, {
+    shouldForwardProp: (prop) => prop !== 'open',
+})(({ theme, open }) => ({
+    zIndex: theme.zIndex.drawer + 1,
+    transition: theme.transitions.create(['width', 'margin'], {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
+    }),
+    ...(open && {
+        marginLeft: drawerWidth,
+        width: `calc(100% - ${drawerWidth}px)`,
+        transition: theme.transitions.create(['width', 'margin'], {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.enteringScreen,
+        }),
+    }),
+}));
+
+const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
+    ({ theme, open }) => ({
+        width: drawerWidth,
+        flexShrink: 0,
+        whiteSpace: 'nowrap',
+        boxSizing: 'border-box',
+        ...(open && {
+            ...openedMixin(theme),
+            '& .MuiDrawer-paper': openedMixin(theme),
+        }),
+        ...(!open && {
+            ...closedMixin(theme),
+            '& .MuiDrawer-paper': closedMixin(theme),
+        }),
+    }),
+);
+
+export default function Info() {
+
+    const theme = useTheme();
+    const [open, setOpen] = useState(false);
+    const classes = myStyles();
+
+    const [values, setValues] = useState({
+        bucket_key: '',
+        access_key: '',
+        webdash_url: '',
+        sideview_url: '',
+        toggle_feed: '',
+        extra_feed: ''
+    });
+
+    useEffect(() => {
+        const side = localStorage.getItem("sideview_url");
+        const sideview = JSON.parse(side);
+        setValues({ ...values, "sideview_url": sideview });
+    }, []);
+
+    /*
+    useEffect(() => {
+        const web = localStorage.getItem("webdash_url");
+        const webdash = JSON.parse(web);
+        setValues({ ...values, "webdash_url": webdash });
+    }, []);
+
+    useEffect(() => {
+        const tog = localStorage.getItem("toggle_feed");
+        const toggle = JSON.parse(tog);
+        setValues({ ...values, "toggle_feed": toggle });
+    }, []);
+
+    useEffect(() => {
+        const ex = localStorage.getItem("extra_feed");
+        const extra = JSON.parse(ex);
+        setValues({ ...values, "extra_feed": extra });
+    }, []);
+
+    useEffect(() => {
+        const buc = localStorage.getItem("bucket_key");
+        const bucket = JSON.parse(buc);
+        setValues({ ...values, "bucket_key": bucket });
+    }, []);
+
+    useEffect(() => {
+        const acc = localStorage.getItem("access_key");
+        const access = JSON.parse(acc);
+        setValues({ ...values, "access_key": access });
+    }, []);
+    */
+        
+        
+    const handleChange = (prop) => (event) => {
+        setValues({ ...values, [prop]: event.target.value });
+    };
+
+    const saveValues = () => {
+        localStorage.setItem("bucket_key", JSON.stringify(values.bucket_key));
+        localStorage.setItem("access_key", JSON.stringify(values.access_key));
+        localStorage.setItem("webdash_url", JSON.stringify(values.webdash_url));
+        localStorage.setItem("sideview_url", JSON.stringify(values.sideview_url));
+        localStorage.setItem("toggle_feed", JSON.stringify(values.toggle_feed));
+        localStorage.setItem("extra_feed", JSON.stringify(values.extra_feed));
+    }
+
+    const handleDrawerOpen = () => {
+        setOpen(true);
+    };
+
+    const handleDrawerClose = () => {
+        setOpen(false);
+    };
+
+    return (
+
+        <Box sx={{ display: 'flex', color: '#ffffff', bgcolor: '#0c2d48', paddingBottom: 100 }}>
+            <CssBaseline />
+            <AppBar position="fixed" open={open}>
+                <Toolbar sx={{ bgcolor: '#274472' }}>
+                    <IconButton
+                        color="inherit"
+                        aria-label="open drawer"
+                        onClick={handleDrawerOpen}
+                        edge="start"
+                        sx={{
+                            marginRight: '36px',
+                            ...(open && { display: 'none' }),
+                        }}
+                    >
+                        <MenuIcon />
+                    </IconButton>
+                    <Typography variant="h6" noWrap component="div">
+                        Credentials
+                    </Typography>
+                </Toolbar>
+            </AppBar>
+            <Drawer variant="permanent" open={open}>
+                <DrawerHeader>
+                    <IconButton onClick={handleDrawerClose}>
+                        {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+                    </IconButton>
+                </DrawerHeader>
+                <Divider />
+                <List>
+                    <Link to="/">
+                        <ListItem button key='Overview'>
+                            <ListItemIcon>
+                                <HomeIcon />
+                            </ListItemIcon>
+                            <ListItemText primary='Overview' />
+                        </ListItem>
+                    </Link>
+                    <ListItem button key='Webdash'>
+                        <ListItemIcon>
+                            <PieChartIcon />
+                        </ListItemIcon>
+                        <ListItemText primary='Webdash' />
+                    </ListItem>
+                    <ListItem button key='Sideview'>
+                        <ListItemIcon>
+                            <QueuePlayNextIcon />
+                        </ListItemIcon>
+                        <ListItemText primary='Sideview' />
+                    </ListItem>
+                </List>
+                <Divider />
+                <List>
+                    <Link to="/info">
+                        <ListItem button key='Credentials'>
+                            <ListItemIcon>
+                                <AssignmentIndIcon />
+                            </ListItemIcon>
+                            <ListItemText primary='Credentials' />
+                        </ListItem>
+                    </Link>
+                    <ListItem button key='More'>
+                        <ListItemIcon>
+                            <MoreVertIcon />
+                        </ListItemIcon>
+                        <ListItemText primary='More' />
+                    </ListItem>
+                    <ListItem button key='Acknowledgements'>
+                        <ListItemIcon>
+                            <StarsIcon />
+                        </ListItemIcon>
+                        <ListItemText primary='Acknowledgements' />
+                    </ListItem>
+                </List>
+            </Drawer>
+
+            //**************************************************************** Main UI Components ***********************//
+
+            <Box component="root" sx={{ flexGrow: 1, p: 3 }}>
+                <DrawerHeader />
+                <Box marginLeft={-50} >
+                    <div>
+                        <Box sx={{ p: 3 }}>
+                            <Stack sx={{ marginLeft: -50 }}>
+                                <Card variant="outlined" sx={{ height: 750, }}>
+                                    <CardMedia
+                                        sx={{ height: 140 }}
+                                        image="/images/vault.png"
+                                    />
+                                    <CardContent>
+                                        <Typography gutterBottom variant="h5" component="div">
+                                            API Keys & Credentials
+                                        </Typography>
+                                        <Stack>
+                                            <FormControl fullWidth sx={{ m: 1 }}>
+                                                <InputLabel htmlFor="sideview-url">Sideview</InputLabel>
+                                                <OutlinedInput
+                                                    id="sideview-url"
+                                                    value={values.sideview_url}
+                                                    onChange={handleChange('sideview_url')}
+                                                    startAdornment={<InputAdornment position="start"><AccountCircle /></InputAdornment>}
+                                                    label="Sideview"
+                                                />
+                                            </FormControl>
+                                            <FormControl fullWidth sx={{ m: 1 }}>
+                                                <InputLabel htmlFor="webdash-url">Webdash</InputLabel>
+                                                <OutlinedInput
+                                                    id="webdash-url"
+                                                    value={values.webdash_url}
+                                                    onChange={handleChange('webdash_url')}
+                                                    startAdornment={<InputAdornment position="start"><AccountCircle /></InputAdornment>}
+                                                    label="Webdash"
+                                                />
+                                            </FormControl>
+                                            <FormControl fullWidth sx={{ m: 1 }}>
+                                                <InputLabel htmlFor="bucket">Bucket Key</InputLabel>
+                                                <OutlinedInput
+                                                    id="bucket"
+                                                    value={values.bucket_key}
+                                                    onChange={handleChange('bucket_key')}
+                                                    startAdornment={<InputAdornment position="start"><AccountCircle /></InputAdornment>}
+                                                    label="Bucket Key"
+                                                />
+                                            </FormControl>
+                                            <FormControl fullWidth sx={{ m: 1 }}>
+                                                <InputLabel htmlFor="access">Access Key</InputLabel>
+                                                <OutlinedInput
+                                                    id="access"
+                                                    value={values.access_key}
+                                                    onChange={handleChange('access_key')}
+                                                    startAdornment={<InputAdornment position="start"><AccountCircle /></InputAdornment>}
+                                                    label="Access Key"
+                                                />
+                                            </FormControl>
+                                            <FormControl fullWidth sx={{ m: 1 }}>
+                                                <InputLabel htmlFor="toggle">Toggle Feed</InputLabel>
+                                                <OutlinedInput
+                                                    id="toggle"
+                                                    value={values.toggle_feed}
+                                                    onChange={handleChange('toggle_feed')}
+                                                    startAdornment={<InputAdornment position="start"><AccountCircle /></InputAdornment>}
+                                                    label="Toggle Feed"
+                                                />
+                                            </FormControl>
+                                            <FormControl fullWidth sx={{ m: 1 }}>
+                                                <InputLabel htmlFor="extra">Extra Feed</InputLabel>
+                                                <OutlinedInput
+                                                    id="extra"
+                                                    value={values.extra_feed}
+                                                    onChange={handleChange('extra_feed')}
+                                                    startAdornment={<InputAdornment position="start"><AccountCircle /></InputAdornment>}
+                                                    label="Extra Feed"
+                                                />
+                                            </FormControl>
+                                            <Button
+                                                variant="contained"
+                                                onClick={saveValues}
+                                                className={classes.root}
+                                                sx={{marginTop:5}}
+                                            >
+                                                SAVE
+                                            </Button>
+                                        </Stack>
+                                    </CardContent>
+                                </Card>
+                            </Stack>
+                        </Box>
+                    </div>
+                </Box>
+            </Box>
+        </Box>
+
+    );
+}
