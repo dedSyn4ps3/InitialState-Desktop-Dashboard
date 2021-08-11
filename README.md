@@ -10,3 +10,6 @@ One of the main services that we love to use on a regular basis is provided by I
 **The app uses Material-UI themed React components, all bundled up into a smooth-running Electron-powered application**<img width="1062" alt="Overview Screen" src="https://user-images.githubusercontent.com/49820403/128966436-409bdab6-6eca-407d-b61f-2e53cdf7df83.png">
 ---
 ## While this release version is fully functional as-is out of the box, it is by no means complete! More tabs will be added with additional functionality and more feed data...we just wanted to go ahead and share the project with everyone else to provide feedback and even make contributions.
+
+
+**Note: For the time being, the names of the sensor data feed that your devices send to your dashboard will have to be named as follows for the app to correctly retrieve them:** `LivingRoom-Temperature | LivingRoom-Humidity | Bedroom-Temperature | Bedroom-Humidity`
