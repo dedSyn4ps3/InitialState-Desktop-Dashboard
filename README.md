@@ -1,3 +1,12 @@
+<div align='center'>
+<pre> <img height="20px" src="https://www.svgrepo.com/show/138020/binoculars.svg">  <b>Keep An Eye Out</b>  <img height="20px" src="https://www.svgrepo.com/show/138020/binoculars.svg"></pre>
+<h4> New changes are coming soon! </h4>
+<p> Including a better backend and updated UI </p>
+<pre><b>❤️ dedSyn4ps3</b></pre>
+</div>
+
+<br>
+
 # InitialState-Desktop-Dashboard
 ### A desktop companion to our mobile app. Easily view several data feeds without opening your browser!
 
